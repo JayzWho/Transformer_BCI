@@ -1,0 +1,7 @@
+Subject: subject1
+Batch Size: 32
+Number of Epochs: 100
+Learning Rate: 1e-05
+Sequence Length: 1024
+Total Loss: 1.0111
+Total Accuracy: 0.4505

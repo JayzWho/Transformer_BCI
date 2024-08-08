@@ -1,0 +1,6 @@
+Batch Size: 32
+Number of Epochs: 50
+Learning Rate: 1e-05
+Sequence Length: 12
+Total Loss: 8.0639
+Total Accuracy: 0.5841
