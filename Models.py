@@ -159,11 +159,11 @@ class Encoder(nn.Module):
         slf_attn_mask = (slf_attn_mask_keypad + slf_attn_mask_subseq).gt(0)
 
         EEG_enc = self.eeg_encoder(features, non_pad_mask)
-        #tem_enc = self.temporal_enc(event_time, non_pad_mask)
+        tem_enc = self.temporal_enc(event_time, non_pad_mask)
         EEG_enc *= self.eeg_weight
-        #tem_enc *= self.tem_weight
+        tem_enc *= self.tem_weight
         '''Mind whether to include temporal encoding'''
-        #EEG_enc += tem_enc
+        EEG_enc += tem_enc
         #Sprint("EEG_enc:",EEG_enc)
         #enc_output = self.event_emb(event_type)
         enc_output = 0

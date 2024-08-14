@@ -10,7 +10,7 @@ from Utils import loglikelihood_trans
 from tqdm import tqdm
 from datetime import datetime
 from Main import train_model, evaluate_model
-from Consts import TRAIN_ROOT, BATCH, EPOCH, LR, NUM_CLASS, SEQ_L, CV1_SUBJECT
+from Consts import TRAIN_ROOT, BATCH, EPOCH, LR, NUM_CLASS, SEQ_L, SUBJECT
 
 # Constants
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

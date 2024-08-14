@@ -19,7 +19,6 @@ class TimeSeriesDataset(Dataset):
         self.labels = self.map_labels(self.labels)
 
         self.labels = self.one_hot_encode(self.labels, 3)
-        self.labels = self.labels.squeeze(1)
         # Generate time indices
         self.time_indices = list(range(self.features.shape[0]))
     
@@ -34,7 +33,7 @@ class TimeSeriesDataset(Dataset):
         one_hot = np.zeros((num_samples, num_classes), dtype=np.float32)
         one_hot[np.arange(num_samples), labels.flatten()] = 1
         # Convert to tensor and add the extra dimension
-        return torch.tensor(one_hot).unsqueeze(1)  # Shape: (y, 1, num_classes)
+        return torch.tensor(one_hot)  # Shape: (y,num_classes)
 
     def __len__(self):
         # Return the length of the labels
@@ -63,6 +62,17 @@ def get_dataloaders(train_mat, val_mat, batch_size):
     # Return the train and validation data loaders
     return train_loader, val_loader
 
+def get_trainloader_CNN_single(train_mat,batch_size):
+    train_dataset = TimeSeriesDataset(train_mat)
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    return train_loader
+def get_testloader_CNN_single(test_mat,batch_size):
+    test_dataset = TimeSeriesDataset(test_mat)
+    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    return test_loader
+def get_CNN_dataset(mat_file):
+    dataset=TimeSeriesDataset(mat_file)
+    return dataset
 
 '''Datasets for the Transformer Model'''
 class TransDataset(Dataset):

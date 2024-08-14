@@ -123,34 +123,7 @@ def evaluate_model(model, val_loader, criterion):
     print(f'Validation Loss: {loss:.4f}, Validation Accuracy: {accuracy:.4f}')
     
     return loss, correct_valid, total_valid
-'''
-# 评估函数
-def evaluate_model(model, val_loader, criterion):
-    model.eval()
-    total_loss = 0.0
-    correct = 0
-    total = 0
-    with torch.no_grad():
-        for features, labels, _ in val_loader:
-            features = features.to(device)
-            #labels = labels.squeeze(1)  # 变为形状 [batch_size, 3]
-            labels = labels.to(device)
 
-            outputs = model.forward(features)
-            
-            loss = criterion(outputs, labels)
-            total_loss += loss.item()
-
-            
-            _, predicted = torch.max(outputs.data, 1)
-            single_labels=torch.argmax(labels, dim=1)
-            total += labels.size(0)
-            correct += (predicted == single_labels).sum().item()
-
-    accuracy = correct / total
-    print(f'Validation')
-    print(f'Validation Loss: {total_loss/len(val_loader):.4f}, Accuracy: {100 * accuracy:.2f}%')
-'''
 
 '''
 # 主程序

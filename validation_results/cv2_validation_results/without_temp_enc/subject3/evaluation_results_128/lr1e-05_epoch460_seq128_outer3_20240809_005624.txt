@@ -1,0 +1,7 @@
+Subject: subject3
+Batch Size: 32
+Best Epoch: 460
+Learning Rate: 1e-05
+Sequence Length: 128
+Test Loss: 1.1505
+Test Accuracy: 0.4196

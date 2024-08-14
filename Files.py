@@ -1,36 +1,23 @@
-import os
-import pandas as pd
-from Consts import CV1_SUBJECT
-'''
-Combine several validation Excel files into one
-'''
-def extract_seq_length(file_name):
-    """Extract sequence length from file name."""
-    seq_length = int(file_name.split('_')[1].replace('seq', ''))
-    return seq_length
+import numpy as np
+from scipy.io import loadmat, savemat
 
-def merge_excel_files(directory):
-    """Merge multiple Excel files into one DataFrame."""
-    merged_df = pd.DataFrame()
+# 读取 true_labels.txt 文件中的数据
+with open('true_label.txt', 'r') as file:
+    data = file.readlines()
 
-    for file_name in os.listdir(directory):
-        if file_name.endswith('.xlsx'):
-            file_path = os.path.join(directory, file_name)
-            df = pd.read_excel(file_path)
-            seq_length = extract_seq_length(file_name)
-            df['Seq_Length'] = seq_length
-            merged_df = pd.concat([merged_df, df], ignore_index=True)
+# 将数据转换为 numpy 数组并将其变成列向量
+Y = np.array([float(x.strip()) for x in data]).reshape(-1, 1)
 
-    return merged_df
+# 尝试加载现有的 .mat 文件，如果文件不存在则创建一个空字典
+try:
+    mat_data = loadmat('test.mat')
+except FileNotFoundError:
+    mat_data = {}
 
-subject_root='cv1_with_temp'
-subject=CV1_SUBJECT
-# Directory containing the Excel files
-directory = f'{subject_root}/{subject}'
+# 将新的 Y 矩阵添加到 mat 数据中
+mat_data['Y'] = Y
 
-# Merge files and save to a new Excel file
-merged_df = merge_excel_files(directory)
-output_file = f'{subject_root}/{subject}/{subject}_merged.xlsx'
-merged_df.to_excel(output_file, index=False)
+# 将更新后的数据保存回 .mat 文件中
+savemat('test.mat', mat_data)
 
-print(f"Merged file saved to: {output_file}")
+print(f'Data has been successfully saved to test.mat as the Y matrix, with original data preserved.')
